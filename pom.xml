@@ -11,7 +11,7 @@
     </parent>
 
     <artifactId>gridcapa-swe-adapter</artifactId>
-    <version>0.1</version>
+    <version>0.0.1</version>
     <name>GridCapa SWE adapter</name>
     <description>POM parent for applications that adapt an income to a process launch</description>
     <packaging>pom</packaging>
@@ -45,6 +45,8 @@
     <properties>
         <task-manager.version>1.6.0</task-manager.version>
         <swe.version>0.0.1</swe.version>
+        <sonar.organization>farao-community</sonar.organization>
+        <sonar.host.url>https://sonarcloud.io</sonar.host.url>
     </properties>
 
     <dependencyManagement>
