@@ -7,13 +7,17 @@
     <parent>
         <artifactId>gridcapa-swe-adapter</artifactId>
         <groupId>com.farao-community.farao</groupId>
-        <version>0.0.1-SNAPSHOT</version>
+        <version>0.1</version>
     </parent>
 
     <artifactId>gridcapa-swe-adapter-app</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.1</version>
     <name>GridCapa SWE adapter application</name>
     <description>Application that turns a RabbitMQ request from a task to a SWE request</description>
+
+    <properties>
+        <cse.version>0.0.1</cse.version>
+    </properties>
 
     <build>
         <plugins>
@@ -24,15 +28,31 @@
         </plugins>
     </build>
 
-    <properties>
-
-    </properties>
-
     <dependencies>
         <!-- Compile dependencies -->
         <dependency>
+            <groupId>com.farao-community.farao</groupId>
+            <artifactId>gridcapa-task-manager-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-stream-binder-rabbit</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.farao-community.farao</groupId>
+            <artifactId>gridcapa-swe-runner-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.farao-community.farao</groupId>
+            <artifactId>gridcapa-swe-runner-starter</artifactId>
         </dependency>
 
         <!-- Test dependencies -->

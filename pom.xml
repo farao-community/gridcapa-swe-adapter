@@ -11,7 +11,7 @@
     </parent>
 
     <artifactId>gridcapa-swe-adapter</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.1</version>
     <name>GridCapa SWE adapter</name>
     <description>POM parent for applications that adapt an income to a process launch</description>
     <packaging>pom</packaging>
@@ -43,9 +43,27 @@
     </developers>
 
     <properties>
-
+        <task-manager.version>1.6.0</task-manager.version>
+        <swe.version>0.0.1</swe.version>
     </properties>
-    <dependencyManagement>
 
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>com.farao-community.farao</groupId>
+                <artifactId>gridcapa-task-manager-api</artifactId>
+                <version>${task-manager.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.farao-community.farao</groupId>
+                <artifactId>gridcapa-swe-runner-starter</artifactId>
+                <version>0.0.1</version>
+            </dependency>
+            <dependency>
+                <groupId>com.farao-community.farao</groupId>
+                <artifactId>gridcapa-swe-runner-api</artifactId>
+                <version>${swe.version}</version>
+            </dependency>
+        </dependencies>
     </dependencyManagement>
 </project>

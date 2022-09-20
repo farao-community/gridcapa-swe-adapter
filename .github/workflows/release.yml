@@ -13,7 +13,7 @@ on:
 jobs:
   release:
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/master'
+    if: github.ref == 'refs/heads/main'
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -40,7 +40,7 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
       - name: Commit and tag release version
-        uses: stefanzweifel/git-auto-commit-action@master
+        uses: stefanzweifel/git-auto-commit-action@main
         with:
           branch: release-v${{ github.event.inputs.releaseVersion }}
           create_branch: true
@@ -60,9 +60,9 @@ jobs:
         run: mvn --batch-mode -Pdefault,coverage clean install
 
       - name: Build and publish Docker image
-        uses: elgohr/Publish-Docker-Github-Action@master
+        uses: elgohr/Publish-Docker-Github-Action@main
         with:
-          name: farao/gridcapa-swe-adapter
+          name: farao/gridcapa-swe
           username: farao
           password: ${{ secrets.DOCKERHUB_TOKEN }}
           tags: v${{ github.event.inputs.releaseVersion }}
@@ -71,7 +71,7 @@ jobs:
         run: mvn --batch-mode versions:set -DgenerateBackupPoms=false -DnewVersion=${{ github.event.inputs.nextVersion }}-SNAPSHOT
 
       - name: Commit next version
-        uses: stefanzweifel/git-auto-commit-action@master
+        uses: stefanzweifel/git-auto-commit-action@main
         with:
           branch: next-release-v${{ github.event.inputs.nextVersion }}
           create_branch: true
@@ -79,12 +79,12 @@ jobs:
           skip_fetch: true
           skip_checkout: true
 
-      - name: Merge automatically into master
-        uses: devmasx/merge-branch@master
+      - name: Merge automatically into main
+        uses: devmasx/merge-branch@main
         with:
           type: now
           from_branch: next-release-v${{ github.event.inputs.nextVersion }}
-          target_branch: master
+          target_branch: main
           message: Automatic merge after release ${{ github.event.inputs.releaseVersion }}
           github_token: ${{ secrets.REPO_ACCESS_TOKEN }}
 

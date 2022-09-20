@@ -1,3 +1,25 @@
 spring:
   banner:
     location: banner.txt
+  rabbitmq:
+    username: gridcapa
+    password: gridcapa
+    host: localhost
+    port: 5672
+  cloud:
+    stream:
+      bindings:
+        consumeTask-in-0:
+          binder: rabbit
+          destination: swe-idcc-run-task
+      rabbit:
+        default:
+          consumer:
+            auto-bind-dlq: true
+            max-attempts: 1
+    function:
+      definition: consumeTask
+
+swe-runner:
+  binding:
+    destination: swe-idcc-request
