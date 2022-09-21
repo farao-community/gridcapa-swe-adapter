@@ -1,0 +1,33 @@
+
+Æcom.farao_community.farao.swe.adapter.app.SweAdapterListener#getManualSweRequest(Lcom/farao_community/farao/gridcapa/task_manager/api/TaskDto;)Lcom/farao_community/farao/swe/api/resource/SweRequest;¯
+¤/home/runner/work/gridcapa-swe-adapter/gridcapa-swe-adapter/gridcapa-swe-adapter-app/src/main/java/com/farao_community/farao/swe/adapter/app/SweAdapterListener.java8 8(""1*Ö
+1¯
+¤/home/runner/work/gridcapa-swe-adapter/gridcapa-swe-adapter/gridcapa-swe-adapter-app/src/main/java/com/farao_community/farao/swe/adapter/app/SweAdapterListener.java9 9(%óð
+¯
+¤/home/runner/work/gridcapa-swe-adapter/gridcapa-swe-adapter/gridcapa-swe-adapter-app/src/main/java/com/farao_community/farao/swe/adapter/app/SweAdapterListener.java9 9(-
+%0java.util.UUID"Scom.farao_community.farao.gridcapa.task_manager.api.TaskDto#getId()Ljava/util/UUID;*H
+F
+taskDto;com.farao_community.farao.gridcapa.task_manager.api.TaskDto2getId()ž›
+¯
+¤/home/runner/work/gridcapa-swe-adapter/gridcapa-swe-adapter/gridcapa-swe-adapter-app/src/main/java/com/farao_community/farao/swe/adapter/app/SweAdapterListener.java9 9(8
+%1java.lang.String"+java.util.UUID#toString()Ljava/lang/String;*
+
+%0java.util.UUID2
+toString()©¦
+¯
+¤/home/runner/work/gridcapa-swe-adapter/gridcapa-swe-adapter/gridcapa-swe-adapter-app/src/main/java/com/farao_community/farao/swe/adapter/app/SweAdapterListener.java9 9(;
+%25com.farao_community.farao.swe.api.resource.SweRequest"5com.farao_community.farao.swe.api.resource.SweRequestç
+ä
+¯
+¤/home/runner/work/gridcapa-swe-adapter/gridcapa-swe-adapter/gridcapa-swe-adapter-app/src/main/java/com/farao_community/farao/swe/adapter/app/SweAdapterListener.java9 9(9
+%3"Qcom.farao_community.farao.swe.api.resource.SweRequest#<init>(Ljava/lang/String;)V*=
+;
+%25com.farao_community.farao.swe.api.resource.SweRequest*
+
+%1java.lang.String"ñ
+¯
+¤/home/runner/work/gridcapa-swe-adapter/gridcapa-swe-adapter/gridcapa-swe-adapter-app/src/main/java/com/farao_community/farao/swe/adapter/app/SweAdapterListener.java9 9(:=
+;
+%25com.farao_community.farao.swe.api.resource.SweRequest:F
+taskDto;com.farao_community.farao.gridcapa.task_manager.api.TaskDtoB@>
+<com.farao_community.farao.swe.adapter.app.SweAdapterListener
