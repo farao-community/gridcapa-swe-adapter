@@ -56,4 +56,5 @@ public class SweAdapterListener {
     SweRequest getManualSweRequest(TaskDto taskDto) {
         return new SweRequest(taskDto.getId().toString());
     }
+
 }
