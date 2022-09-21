@@ -37,7 +37,7 @@ jobs:
       - name: Build and publish Docker image
         uses: elgohr/Publish-Docker-Github-Action@main
         with:
-          name: farao/gridcapa-swe
+          name: farao/gridcapa-swe-adapter
           username: farao
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
@@ -45,4 +45,4 @@ jobs:
         uses: farao-community/broadcast-event@master
         with:
           token: ${{ secrets.REPO_ACCESS_TOKEN }}
-          event-type: gridcapa_swe_updated
+          event-type: gridcapa_swe_adapter_updated
