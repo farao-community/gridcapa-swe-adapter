@@ -1,4 +1,0 @@
-com.farao_community.farao.swe.adapter.app.SweAdapterListener#getManualSweRequest(Lcom/farao_community/farao/gridcapa/task_manager/api/TaskDto;)Lcom/farao_community/farao/swe/api/resource/SweRequest;
-com.farao_community.farao.swe.api.resource.SweRequest#<init>(Ljava/lang/String;)V
-java.util.UUID#toString()Ljava/lang/String;
-com.farao_community.farao.swe.api.resource.SweRequest#instance-init#

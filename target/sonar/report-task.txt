@@ -1,7 +1,0 @@
-organization=farao-community
-projectKey=farao-community_gridcapa-swe-adapter
-serverUrl=https://sonarcloud.io
-serverVersion=8.0.0.32298
-dashboardUrl=https://sonarcloud.io/dashboard?id=farao-community_gridcapa-swe-adapter
-ceTaskId=AYNgEdfWDt-wv0Vp_44o
-ceTaskUrl=https://sonarcloud.io/api/ce/task?id=AYNgEdfWDt-wv0Vp_44o
