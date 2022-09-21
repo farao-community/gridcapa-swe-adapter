@@ -51,7 +51,6 @@ public class SweAdapterListener {
         } catch (Exception e) {
             throw new SweAdapterException(String.format("Error during handling manual run request %s on TS ", taskDto.getTimestamp()), e);
         }
-
     }
 
     SweRequest getManualSweRequest(TaskDto taskDto) {

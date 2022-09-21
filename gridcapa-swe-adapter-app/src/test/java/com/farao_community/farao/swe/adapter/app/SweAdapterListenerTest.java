@@ -64,6 +64,13 @@ class SweAdapterListenerTest {
         assertNotNull(sweRequest.getId());
     }
 
+    @Test
+    void consumePendingTaskError() {
+        TaskDto taskDto = createTaskDtoWithStatus(TaskStatus.PENDING);
+        sweAdapterListener.consumeTask().accept(taskDto);
+        Mockito.verify(sweClient, Mockito.times(0)).run(argumentCaptor.capture(), eq(SweRequest.class), eq(SweResponse.class));
+    }
+
     TaskDto createTaskDtoWithStatus(TaskStatus status) {
         UUID id = UUID.randomUUID();
         OffsetDateTime timestamp = OffsetDateTime.parse("2022-09-20T10:30Z");
