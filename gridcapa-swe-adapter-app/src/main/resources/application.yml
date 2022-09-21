@@ -6,6 +6,8 @@ spring:
     password: gridcapa
     host: localhost
     port: 5672
+    template:
+      reply-timeout: 36000000
   cloud:
     stream:
       bindings:
