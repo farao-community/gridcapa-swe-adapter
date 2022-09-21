@@ -59,7 +59,7 @@
             <dependency>
                 <groupId>com.farao-community.farao</groupId>
                 <artifactId>gridcapa-swe-runner-starter</artifactId>
-                <version>0.0.1</version>
+                <version>${swe.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.farao-community.farao</groupId>

@@ -16,7 +16,6 @@
     <description>Application that turns a RabbitMQ request from a task to a SWE request</description>
 
     <properties>
-        <cse.version>0.0.1</cse.version>
     </properties>
 
     <build>
