@@ -2,24 +2,16 @@ package com.farao_community.farao.swe.adapter.app;
 
 import com.farao_community.farao.gridcapa.task_manager.api.*;
 import com.farao_community.farao.swe.api.resource.SweRequest;
-import com.farao_community.farao.swe.api.resource.SweResponse;
-import com.farao_community.farao.swe.runner.starter.SweClient;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import org.mockito.ArgumentCaptor;
-import org.mockito.Captor;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-
-import static org.mockito.ArgumentMatchers.eq;
 
 /**
  * @author Theo Pascoli {@literal <theo.pascoli at rte-france.com>}
@@ -29,12 +21,6 @@ class SweAdapterListenerTest {
 
     @Autowired
     private SweAdapterListener sweAdapterListener;
-
-    @Captor
-    private ArgumentCaptor<SweRequest> argumentCaptor;
-
-    @MockBean
-    private SweClient sweClient;
 
     private static String cgmFileName;
     private static String cgmFileType;
@@ -64,7 +50,6 @@ class SweAdapterListenerTest {
     void consumePendingTaskError() {
         TaskDto taskDto = createTaskDtoWithStatus(TaskStatus.PENDING);
         sweAdapterListener.consumeTask().accept(taskDto);
-        Mockito.verify(sweClient, Mockito.times(0)).run(argumentCaptor.capture(), eq(SweRequest.class), eq(SweResponse.class));
     }
 
     TaskDto createTaskDtoWithStatus(TaskStatus status) {
