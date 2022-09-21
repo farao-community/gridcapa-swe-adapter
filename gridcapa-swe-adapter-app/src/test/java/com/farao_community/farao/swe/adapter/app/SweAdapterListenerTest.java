@@ -59,7 +59,7 @@ class SweAdapterListenerTest {
     void consumeReadyTask() {
         TaskDto taskDto = createTaskDtoWithStatus(TaskStatus.READY);
         sweAdapterListener.consumeTask().accept(taskDto);
-        Mockito.verify(sweClient).run(argumentCaptor.capture(), eq(SweRequest.class), eq(SweResponse.class));
+        Mockito.verify(sweClient, Mockito.times(1)).run(argumentCaptor.capture(), eq(SweRequest.class), eq(SweResponse.class));
         SweRequest sweRequest = argumentCaptor.getValue();
         assertNotNull(sweRequest.getId());
     }
