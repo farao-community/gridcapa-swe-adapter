@@ -18,7 +18,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 
-import java.util.*;
+import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.Consumer;
 
@@ -59,21 +59,24 @@ public class SweAdapterListener {
     SweRequest getManualSweRequest(TaskDto taskDto) {
         return new SweRequest(taskDto.getId().toString(),
                 taskDto.getTimestamp(),
-                Optional.ofNullable(processFileUrlByType.get("CGM")).orElseThrow(() -> new SweAdapterException("CGM type not found")),
-                Optional.ofNullable(processFileUrlByType.get("CGM")).orElseThrow(() -> new SweAdapterException("CGM type not found")),
-                Optional.ofNullable(processFileUrlByType.get("CGM")).orElseThrow(() -> new SweAdapterException("CGM type not found")),
-                Optional.ofNullable(processFileUrlByType.get("CGM")).orElseThrow(() -> new SweAdapterException("CGM type not found")),
-                Optional.ofNullable(processFileUrlByType.get("CGM")).orElseThrow(() -> new SweAdapterException("CGM type not found")),
-                Optional.ofNullable(processFileUrlByType.get("CGM")).orElseThrow(() -> new SweAdapterException("CGM type not found")),
-                Optional.ofNullable(processFileUrlByType.get("CGM")).orElseThrow(() -> new SweAdapterException("CGM type not found")),
-                Optional.ofNullable(processFileUrlByType.get("CGM")).orElseThrow(() -> new SweAdapterException("CGM type not found")),
-                Optional.ofNullable(processFileUrlByType.get("CGM")).orElseThrow(() -> new SweAdapterException("CGM type not found")),
-                Optional.ofNullable(processFileUrlByType.get("CGM")).orElseThrow(() -> new SweAdapterException("CGM type not found")));
+                getFileRessourceFromInputs(taskDto.getInputs(), "CORESO_SV"),
+                getFileRessourceFromInputs(taskDto.getInputs(), "REE_EQ"),
+                getFileRessourceFromInputs(taskDto.getInputs(), "REE_SSH"),
+                getFileRessourceFromInputs(taskDto.getInputs(), "REE_TP"),
+                getFileRessourceFromInputs(taskDto.getInputs(), "REN_EQ"),
+                getFileRessourceFromInputs(taskDto.getInputs(), "REN_SSH"),
+                getFileRessourceFromInputs(taskDto.getInputs(), "REN_TP"),
+                getFileRessourceFromInputs(taskDto.getInputs(), "RTE_EQ"),
+                getFileRessourceFromInputs(taskDto.getInputs(), "RTE_SSH"),
+                getFileRessourceFromInputs(taskDto.getInputs(), "RTE_TP"));
     }
 
-
     private SweFileResource getFileRessourceFromInputs(List<ProcessFileDto> listInputs, String type) {
-        listInputs.stream().filter(p -> p.getFileType().equals(type)).findFirst().ifPresentOrElse();
+        ProcessFileDto input = listInputs.stream()
+                .filter(p -> p.getFileType().equals(type))
+                .findFirst()
+                .orElseThrow(() -> new SweAdapterException("No file found for type " + type));
+        return new SweFileResource(input.getFilename(), input.getFileUrl());
     }
 
 }
