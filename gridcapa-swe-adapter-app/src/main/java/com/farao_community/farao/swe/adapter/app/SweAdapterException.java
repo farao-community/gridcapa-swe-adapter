@@ -15,4 +15,8 @@ public class SweAdapterException extends RuntimeException {
         super(message, throwable);
     }
 
+    public SweAdapterException(String message) {
+        super(message);
+    }
+
 }

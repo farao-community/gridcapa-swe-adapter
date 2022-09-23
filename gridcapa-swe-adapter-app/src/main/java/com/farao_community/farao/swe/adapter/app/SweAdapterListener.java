@@ -6,16 +6,19 @@
  */
 package com.farao_community.farao.swe.adapter.app;
 
+import com.farao_community.farao.gridcapa.task_manager.api.ProcessFileDto;
 import com.farao_community.farao.gridcapa.task_manager.api.TaskDto;
 import com.farao_community.farao.gridcapa.task_manager.api.TaskStatus;
-import com.farao_community.farao.swe.api.resource.SweRequest;
-import com.farao_community.farao.swe.api.resource.SweResponse;
+import com.farao_community.farao.swe.runner.api.resource.SweFileResource;
+import com.farao_community.farao.swe.runner.api.resource.SweRequest;
+import com.farao_community.farao.swe.runner.api.resource.SweResponse;
 import com.farao_community.farao.swe.runner.starter.SweClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 
+import java.util.*;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.Consumer;
 
@@ -54,7 +57,23 @@ public class SweAdapterListener {
     }
 
     SweRequest getManualSweRequest(TaskDto taskDto) {
-        return new SweRequest(taskDto.getId().toString());
+        return new SweRequest(taskDto.getId().toString(),
+                taskDto.getTimestamp(),
+                Optional.ofNullable(processFileUrlByType.get("CGM")).orElseThrow(() -> new SweAdapterException("CGM type not found")),
+                Optional.ofNullable(processFileUrlByType.get("CGM")).orElseThrow(() -> new SweAdapterException("CGM type not found")),
+                Optional.ofNullable(processFileUrlByType.get("CGM")).orElseThrow(() -> new SweAdapterException("CGM type not found")),
+                Optional.ofNullable(processFileUrlByType.get("CGM")).orElseThrow(() -> new SweAdapterException("CGM type not found")),
+                Optional.ofNullable(processFileUrlByType.get("CGM")).orElseThrow(() -> new SweAdapterException("CGM type not found")),
+                Optional.ofNullable(processFileUrlByType.get("CGM")).orElseThrow(() -> new SweAdapterException("CGM type not found")),
+                Optional.ofNullable(processFileUrlByType.get("CGM")).orElseThrow(() -> new SweAdapterException("CGM type not found")),
+                Optional.ofNullable(processFileUrlByType.get("CGM")).orElseThrow(() -> new SweAdapterException("CGM type not found")),
+                Optional.ofNullable(processFileUrlByType.get("CGM")).orElseThrow(() -> new SweAdapterException("CGM type not found")),
+                Optional.ofNullable(processFileUrlByType.get("CGM")).orElseThrow(() -> new SweAdapterException("CGM type not found")));
+    }
+
+
+    private SweFileResource getFileRessourceFromInputs(List<ProcessFileDto> listInputs, String type) {
+        listInputs.stream().filter(p -> p.getFileType().equals(type)).findFirst().ifPresentOrElse();
     }
 
 }
