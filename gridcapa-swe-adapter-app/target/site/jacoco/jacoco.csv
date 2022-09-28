@@ -1,4 +1,0 @@
-GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
-GridCapa SWE adapter application,com.farao_community.farao.swe.adapter.app,SweAdapterException,0,5,0,0,0,2,0,1,0,1
-GridCapa SWE adapter application,com.farao_community.farao.swe.adapter.app,SweAdapterListener,23,54,2,4,2,16,3,6,1,5
-GridCapa SWE adapter application,com.farao_community.farao.swe.adapter.app,SweAdapterApplication,5,3,0,0,2,1,1,1,1,1
