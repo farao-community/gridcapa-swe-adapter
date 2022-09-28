@@ -1,3 +1,5 @@
+server:
+  port: 8093
 spring:
   banner:
     location: banner.txt
@@ -6,14 +8,12 @@ spring:
     password: gridcapa
     host: localhost
     port: 5672
-    template:
-      reply-timeout: 36000000
   cloud:
     stream:
       bindings:
         consumeTask-in-0:
           binder: rabbit
-          destination: swe-idcc-run-task
+          destination: swe-d2cc-run-task
       rabbit:
         default:
           consumer:
@@ -24,4 +24,4 @@ spring:
 
 swe-runner:
   binding:
-    destination: swe-idcc-request
+    destination: swe-d2cc-request
