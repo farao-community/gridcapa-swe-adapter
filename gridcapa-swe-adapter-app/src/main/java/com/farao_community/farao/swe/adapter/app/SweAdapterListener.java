@@ -69,7 +69,9 @@ public class SweAdapterListener {
                 getFileRessourceFromInputs(taskDto.getInputs(), "RTE_EQ"),
                 getFileRessourceFromInputs(taskDto.getInputs(), "RTE_SSH"),
                 getFileRessourceFromInputs(taskDto.getInputs(), "RTE_TP"),
-                getFileRessourceFromInputs(taskDto.getInputs(), "CRAC"));
+                getFileRessourceFromInputs(taskDto.getInputs(), "CRAC"),
+                getFileRessourceFromInputs(taskDto.getInputs(), "BOUNDARY_EQ"),
+                getFileRessourceFromInputs(taskDto.getInputs(), "BOUNDARY_TP"));
     }
 
     private SweFileResource getFileRessourceFromInputs(List<ProcessFileDto> listInputs, String type) {
