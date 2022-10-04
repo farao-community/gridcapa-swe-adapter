@@ -22,6 +22,9 @@ spring:
     function:
       definition: consumeTask
 
+swe-adapter:
+  process-type: D2CC
+
 swe-runner:
   binding:
     destination: swe-d2cc-request
