@@ -9,12 +9,15 @@ package com.farao_community.farao.swe.adapter.app;
 import com.farao_community.farao.gridcapa.task_manager.api.ProcessFileDto;
 import com.farao_community.farao.gridcapa.task_manager.api.TaskDto;
 import com.farao_community.farao.gridcapa.task_manager.api.TaskStatus;
+import com.farao_community.farao.swe.runner.api.exception.SweInvalidDataException;
+import com.farao_community.farao.swe.runner.api.resource.ProcessType;
 import com.farao_community.farao.swe.runner.api.resource.SweFileResource;
 import com.farao_community.farao.swe.runner.api.resource.SweRequest;
 import com.farao_community.farao.swe.runner.api.resource.SweResponse;
 import com.farao_community.farao.swe.runner.starter.SweClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 
@@ -30,6 +33,9 @@ public class SweAdapterListener {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(SweAdapterListener.class);
     private final SweClient sweClient;
+
+    @Value("${swe-adapter.process-type")
+    private String processType;
 
     public SweAdapterListener(SweClient sweClient) {
         this.sweClient = sweClient;
@@ -58,6 +64,7 @@ public class SweAdapterListener {
 
     SweRequest getManualSweRequest(TaskDto taskDto) {
         return new SweRequest(taskDto.getId().toString(),
+                getProcessTypeFromConfiguration(),
                 taskDto.getTimestamp(),
                 getFileRessourceFromInputs(taskDto.getInputs(), "CORESO_SV"),
                 getFileRessourceFromInputs(taskDto.getInputs(), "REE_EQ"),
@@ -71,7 +78,18 @@ public class SweAdapterListener {
                 getFileRessourceFromInputs(taskDto.getInputs(), "RTE_TP"),
                 getFileRessourceFromInputs(taskDto.getInputs(), "CRAC"),
                 getFileRessourceFromInputs(taskDto.getInputs(), "BOUNDARY_EQ"),
-                getFileRessourceFromInputs(taskDto.getInputs(), "BOUNDARY_TP"));
+                getFileRessourceFromInputs(taskDto.getInputs(), "BOUNDARY_TP"),
+                getFileRessourceFromInputs(taskDto.getInputs(), "GLSK"));
+    }
+
+    private ProcessType getProcessTypeFromConfiguration() {
+        if (this.processType.equals("D2CC")) {
+            return ProcessType.D2CC;
+        } else if (this.processType.equals("IDCC")) {
+            return ProcessType.IDCC;
+        } else {
+            throw new SweInvalidDataException("Unsupported process type");
+        }
     }
 
     private SweFileResource getFileRessourceFromInputs(List<ProcessFileDto> listInputs, String type) {
