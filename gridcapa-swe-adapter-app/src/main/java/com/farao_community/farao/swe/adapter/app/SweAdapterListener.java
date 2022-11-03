@@ -33,7 +33,7 @@ public class SweAdapterListener {
     private static final Logger LOGGER = LoggerFactory.getLogger(SweAdapterListener.class);
     private final SweClient sweClient;
 
-    @Value("${swe-adapter.process-type")
+    @Value("${swe-adapter.process-type}")
     private String processType;
 
     public SweAdapterListener(SweClient sweClient) {
