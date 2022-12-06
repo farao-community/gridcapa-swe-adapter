@@ -49,6 +49,7 @@ public class SweAdapterListener {
         try {
             if (taskDto.getStatus() == TaskStatus.READY
                     || taskDto.getStatus() == TaskStatus.SUCCESS
+                    || taskDto.getStatus() == TaskStatus.INTERRUPTED
                     || taskDto.getStatus() == TaskStatus.ERROR) {
                 LOGGER.info("Handling manual run request on TS {} ", taskDto.getTimestamp());
                 SweRequest request = getManualSweRequest(taskDto);
