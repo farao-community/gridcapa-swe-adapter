@@ -11,7 +11,7 @@
     </parent>
 
     <artifactId>gridcapa-swe-adapter</artifactId>
-    <version>0.0.4-SNAPSHOT</version>
+    <version>0.0.4</version>
     <name>GridCapa SWE adapter</name>
     <description>POM parent for applications that adapt an income to a process launch</description>
     <packaging>pom</packaging>
