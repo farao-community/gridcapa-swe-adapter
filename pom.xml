@@ -43,8 +43,8 @@
     </developers>
 
     <properties>
-        <task-manager.version>1.11.0</task-manager.version>
-        <swe.version>1.0.1</swe.version>
+        <task-manager.version>1.12.0</task-manager.version>
+        <swe.version>1.0.2</swe.version>
         <sonar.organization>farao-community</sonar.organization>
         <sonar.host.url>https://sonarcloud.io</sonar.host.url>
     </properties>
