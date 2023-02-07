@@ -9,6 +9,7 @@ package com.farao_community.farao.swe.adapter.app;
 import com.farao_community.farao.gridcapa.task_manager.api.ProcessFileDto;
 import com.farao_community.farao.gridcapa.task_manager.api.TaskDto;
 import com.farao_community.farao.gridcapa.task_manager.api.TaskStatus;
+import com.farao_community.farao.minio_adapter.starter.MinioAdapter;
 import com.farao_community.farao.swe.runner.api.exception.SweInvalidDataException;
 import com.farao_community.farao.swe.runner.api.resource.ProcessType;
 import com.farao_community.farao.swe.runner.api.resource.SweFileResource;
@@ -32,12 +33,14 @@ public class SweAdapterListener {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(SweAdapterListener.class);
     private final SweClient sweClient;
+    private final MinioAdapter minioAadpter;
 
     @Value("${swe-adapter.process-type}")
     private String processType;
 
-    public SweAdapterListener(SweClient sweClient) {
+    public SweAdapterListener(SweClient sweClient, MinioAdapter minioAadpter) {
         this.sweClient = sweClient;
+        this.minioAadpter = minioAadpter;
     }
 
     @Bean
@@ -97,7 +100,7 @@ public class SweAdapterListener {
                 .filter(p -> p.getFileType().equals(type))
                 .findFirst()
                 .orElseThrow(() -> new SweAdapterException("No file found for type " + type));
-        return new SweFileResource(input.getFilename(), input.getFileUrl());
+        return new SweFileResource(input.getFilename(), minioAadpter.generatePreSignedUrlFromFullMinioPath(input.getFilePath(), 1));
     }
 
 }
