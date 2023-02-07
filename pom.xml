@@ -44,8 +44,8 @@
 
     <properties>
         <gridcapa.starter.minio.adapter.version>1.0.0</gridcapa.starter.minio.adapter.version>
-        <task-manager.version>1.13.0-SNAPSHOT</task-manager.version>
-        <swe.version>1.0.3-SNAPSHOT</swe.version>
+        <task-manager.version>1.13.0</task-manager.version>
+        <swe.version>1.0.2</swe.version>
         <sonar.organization>farao-community</sonar.organization>
         <sonar.host.url>https://sonarcloud.io</sonar.host.url>
     </properties>
