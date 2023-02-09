@@ -97,6 +97,7 @@ public class SweAdapterListener {
 
     private SweFileResource getFileRessourceFromInputs(List<ProcessFileDto> listInputs, String type) {
         ProcessFileDto input = listInputs.stream()
+                .filter(p -> p.getFilePath() != null)
                 .filter(p -> p.getFileType().equals(type))
                 .findFirst()
                 .orElseThrow(() -> new SweAdapterException("No file found for type " + type));
