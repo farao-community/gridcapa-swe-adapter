@@ -103,5 +103,4 @@ public class SweAdapterListener {
                 .orElseThrow(() -> new SweAdapterException("No file found for type " + type));
         return new SweFileResource(input.getFilename(), minioAadpter.generatePreSignedUrlFromFullMinioPath(input.getFilePath(), 1));
     }
-
 }
