@@ -33,14 +33,16 @@ public class SweAdapterListener {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(SweAdapterListener.class);
     private final SweClient sweClient;
-    private final MinioAdapter minioAadpter;
+    private final MinioAdapter minioAdapter;
+    private final Logger adapterEventsLogger;
 
     @Value("${swe-adapter.process-type}")
     private String processType;
 
-    public SweAdapterListener(SweClient sweClient, MinioAdapter minioAadpter) {
+    public SweAdapterListener(SweClient sweClient, MinioAdapter minioAdapter, Logger adapterEventsLogger) {
         this.sweClient = sweClient;
-        this.minioAadpter = minioAadpter;
+        this.minioAdapter = minioAdapter;
+        this.adapterEventsLogger = adapterEventsLogger;
     }
 
     @Bean
@@ -101,6 +103,15 @@ public class SweAdapterListener {
                 .filter(p -> p.getFileType().equals(type))
                 .findFirst()
                 .orElseThrow(() -> new SweAdapterException("No file found for type " + type));
-        return new SweFileResource(input.getFilename(), minioAadpter.generatePreSignedUrlFromFullMinioPath(input.getFilePath(), 1));
+        return new SweFileResource(input.getFilename(), getFileUrl(input.getFilePath()));
+    }
+
+    private String getFileUrl(String filePath) {
+        try {
+            return minioAdapter.generatePreSignedUrlFromFullMinioPath(filePath, 1);
+        } catch (RuntimeException e) {
+            adapterEventsLogger.error("Failed to launch task. Could not get file {}.", filePath);
+            throw new SweAdapterException("Could not retrieve file " + filePath + " from MinIO");
+        }
     }
 }

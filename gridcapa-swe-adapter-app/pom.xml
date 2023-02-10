@@ -58,6 +58,13 @@
             <artifactId>gridcapa-swe-runner-starter</artifactId>
         </dependency>
 
+        <!-- Runtime dependencies -->
+        <dependency>
+            <groupId>net.logstash.logback</groupId>
+            <artifactId>logstash-logback-encoder</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+
         <!-- Test dependencies -->
         <dependency>
             <groupId>org.springframework.boot</groupId>

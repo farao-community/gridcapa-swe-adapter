@@ -44,6 +44,7 @@
 
     <properties>
         <gridcapa.starter.minio.adapter.version>1.0.0</gridcapa.starter.minio.adapter.version>
+        <logstash.version>7.0.1</logstash.version>
         <task-manager.version>1.13.0</task-manager.version>
         <swe.version>1.0.2</swe.version>
         <sonar.organization>farao-community</sonar.organization>
@@ -71,6 +72,14 @@
                 <groupId>com.farao-community.farao</groupId>
                 <artifactId>gridcapa-swe-runner-api</artifactId>
                 <version>${swe.version}</version>
+            </dependency>
+
+            <!-- Runtime dependencies -->
+            <dependency>
+                <groupId>net.logstash.logback</groupId>
+                <artifactId>logstash-logback-encoder</artifactId>
+                <version>${logstash.version}</version>
+                <scope>runtime</scope>
             </dependency>
         </dependencies>
     </dependencyManagement>

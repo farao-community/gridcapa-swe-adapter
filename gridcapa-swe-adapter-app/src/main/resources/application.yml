@@ -1,4 +1,6 @@
 spring:
+  application:
+    name: swe-adapter
   banner:
     location: banner.txt
   rabbitmq:
@@ -19,6 +21,11 @@ spring:
             max-attempts: 1
     function:
       definition: consumeTask
+
+logback:
+  amqp:
+    exchange: swe-d2cc-task-manager-logs-exchange
+    routing-key: "#"
 
 swe-adapter:
   process-type: D2CC
