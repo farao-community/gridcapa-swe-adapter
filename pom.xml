@@ -43,7 +43,8 @@
     </developers>
 
     <properties>
-        <task-manager.version>1.12.0</task-manager.version>
+        <gridcapa.starter.minio.adapter.version>1.0.0</gridcapa.starter.minio.adapter.version>
+        <task-manager.version>1.13.0</task-manager.version>
         <swe.version>1.0.2</swe.version>
         <sonar.organization>farao-community</sonar.organization>
         <sonar.host.url>https://sonarcloud.io</sonar.host.url>
@@ -51,6 +52,11 @@
 
     <dependencyManagement>
         <dependencies>
+            <dependency>
+                <groupId>com.farao-community.farao</groupId>
+                <artifactId>gridcapa-starter-minio-adapter</artifactId>
+                <version>${gridcapa.starter.minio.adapter.version}</version>
+            </dependency>
             <dependency>
                 <groupId>com.farao-community.farao</groupId>
                 <artifactId>gridcapa-task-manager-api</artifactId>
