@@ -90,6 +90,8 @@ public class SweAdapterListener {
             return ProcessType.D2CC;
         } else if (this.processType.equals("IDCC")) {
             return ProcessType.IDCC;
+        } else if (this.processType.equals("IDCC_IDCF")) {
+            return ProcessType.IDCC_IDCF;
         } else {
             throw new SweInvalidDataException("Unsupported process type");
         }
