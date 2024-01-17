@@ -6,8 +6,8 @@
  */
 package com.farao_community.farao.swe.adapter.app;
 
-import com.farao_community.farao.swe.runner.api.exception.AbstractSweException;
-import com.farao_community.farao.swe.runner.api.exception.SweInternalException;
+import com.farao_community.farao.gridcapa_swe_commons.exception.AbstractSweException;
+import com.farao_community.farao.gridcapa_swe_commons.exception.SweInternalException;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;

@@ -6,12 +6,12 @@
  */
 package com.farao_community.farao.swe.adapter.app;
 
+import com.farao_community.farao.gridcapa_swe_commons.exception.SweInvalidDataException;
+import com.farao_community.farao.gridcapa_swe_commons.resource.ProcessType;
 import com.farao_community.farao.gridcapa.task_manager.api.ProcessFileDto;
 import com.farao_community.farao.gridcapa.task_manager.api.TaskDto;
 import com.farao_community.farao.gridcapa.task_manager.api.TaskStatus;
 import com.farao_community.farao.minio_adapter.starter.MinioAdapter;
-import com.farao_community.farao.swe.runner.api.exception.SweInvalidDataException;
-import com.farao_community.farao.swe.runner.api.resource.ProcessType;
 import com.farao_community.farao.swe.runner.api.resource.SweFileResource;
 import com.farao_community.farao.swe.runner.api.resource.SweRequest;
 import com.farao_community.farao.swe.runner.starter.SweClient;
@@ -82,7 +82,8 @@ public class SweAdapterListener {
                 getFileRessourceFromInputs(taskDto.getInputs(), "CRAC"),
                 getFileRessourceFromInputs(taskDto.getInputs(), "BOUNDARY_EQ"),
                 getFileRessourceFromInputs(taskDto.getInputs(), "BOUNDARY_TP"),
-                getFileRessourceFromInputs(taskDto.getInputs(), "GLSK"));
+                getFileRessourceFromInputs(taskDto.getInputs(), "GLSK"),
+                taskDto.getParameters());
     }
 
     private ProcessType getProcessTypeFromConfiguration() {
