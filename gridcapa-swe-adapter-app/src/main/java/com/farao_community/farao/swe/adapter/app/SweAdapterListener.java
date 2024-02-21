@@ -87,15 +87,13 @@ public class SweAdapterListener {
     }
 
     private ProcessType getProcessTypeFromConfiguration() {
-        if (this.processType.equals("D2CC")) {
-            return ProcessType.D2CC;
-        } else if (this.processType.equals("IDCC")) {
-            return ProcessType.IDCC;
-        } else if (this.processType.equals("IDCC_IDCF")) {
-            return ProcessType.IDCC_IDCF;
-        } else {
-            throw new SweInvalidDataException("Unsupported process type");
-        }
+        return switch (processType) {
+            case "D2CC" -> ProcessType.D2CC;
+            case "IDCC" -> ProcessType.IDCC;
+            case "IDCC_IDCF" -> ProcessType.IDCC_IDCF;
+            case "BTCC" -> ProcessType.BTCC;
+            default -> throw new SweInvalidDataException("Unsupported process type");
+        };
     }
 
     private SweFileResource getFileRessourceFromInputs(List<ProcessFileDto> listInputs, String type) {
