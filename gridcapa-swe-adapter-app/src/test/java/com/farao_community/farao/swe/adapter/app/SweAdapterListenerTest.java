@@ -55,7 +55,7 @@ class SweAdapterListenerTest {
         processFiles.add(new ProcessFileDto("filePath", "GLSK", ProcessFileStatus.VALIDATED, "fileName", OffsetDateTime.now()));
         processFiles.add(new ProcessFileDto("filePath", "BOUNDARY_EQ", ProcessFileStatus.VALIDATED, "fileName", OffsetDateTime.now()));
         processFiles.add(new ProcessFileDto("filePath", "BOUNDARY_TP", ProcessFileStatus.VALIDATED, "fileName", OffsetDateTime.now()));
-        return new TaskDto(id, timestamp, status, processFiles, null, null);
+        return new TaskDto(id, timestamp, status, processFiles, null, null, null);
     }
 
 }
