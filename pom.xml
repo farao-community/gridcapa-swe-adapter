@@ -7,7 +7,7 @@
     <parent>
         <groupId>com.farao-community.farao</groupId>
         <artifactId>farao-parent-ws</artifactId>
-        <version>1.7.0</version>
+        <version>1.8.0</version>
     </parent>
 
     <artifactId>gridcapa-swe-adapter</artifactId>
@@ -43,9 +43,9 @@
     </developers>
 
     <properties>
-        <gridcapa.starter.minio.adapter.version>1.1.1</gridcapa.starter.minio.adapter.version>
-        <task-manager.version>1.26.0</task-manager.version>
-        <swe.version>1.17.1</swe.version>
+        <gridcapa.starter.minio.adapter.version>1.1.2</gridcapa.starter.minio.adapter.version>
+        <task-manager.version>1.26.1</task-manager.version>
+        <swe.version>1.17.2</swe.version>
         <sonar.organization>farao-community</sonar.organization>
         <sonar.host.url>https://sonarcloud.io</sonar.host.url>
     </properties>
