@@ -10,6 +10,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
@@ -55,7 +56,7 @@ class SweAdapterListenerTest {
         processFiles.add(new ProcessFileDto("filePath", "GLSK", ProcessFileStatus.VALIDATED, "fileName", OffsetDateTime.now()));
         processFiles.add(new ProcessFileDto("filePath", "BOUNDARY_EQ", ProcessFileStatus.VALIDATED, "fileName", OffsetDateTime.now()));
         processFiles.add(new ProcessFileDto("filePath", "BOUNDARY_TP", ProcessFileStatus.VALIDATED, "fileName", OffsetDateTime.now()));
-        return new TaskDto(id, timestamp, status, processFiles, null, null, null);
+        return new TaskDto(id, timestamp, status, processFiles, null, null, null, Collections.emptyList(), Collections.emptyList());
     }
 
 }
