@@ -1,3 +1,9 @@
+/*
+ * Copyright (c) 2024, RTE (http://www.rte-france.com)
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
 package com.farao_community.farao.swe.adapter.app;
 
 import com.farao_community.farao.gridcapa.task_manager.api.*;
@@ -42,21 +48,21 @@ class SweAdapterListenerTest {
         UUID id = UUID.randomUUID();
         OffsetDateTime timestamp = OffsetDateTime.parse("2022-09-20T10:30Z");
         List<ProcessFileDto> processFiles = new ArrayList<>();
-        processFiles.add(new ProcessFileDto("filePath", "CORESO_SV", ProcessFileStatus.VALIDATED, "fileName", OffsetDateTime.now()));
-        processFiles.add(new ProcessFileDto("filePath", "REE_EQ", ProcessFileStatus.VALIDATED, "fileName", OffsetDateTime.now()));
-        processFiles.add(new ProcessFileDto("filePath", "REE_TP", ProcessFileStatus.VALIDATED, "fileName", OffsetDateTime.now()));
-        processFiles.add(new ProcessFileDto("filePath", "REE_SSH", ProcessFileStatus.VALIDATED, "fileName", OffsetDateTime.now()));
-        processFiles.add(new ProcessFileDto("filePath", "REN_EQ", ProcessFileStatus.VALIDATED, "fileName", OffsetDateTime.now()));
-        processFiles.add(new ProcessFileDto("filePath", "REN_TP", ProcessFileStatus.VALIDATED, "fileName", OffsetDateTime.now()));
-        processFiles.add(new ProcessFileDto("filePath", "REN_SSH", ProcessFileStatus.VALIDATED, "fileName", OffsetDateTime.now()));
-        processFiles.add(new ProcessFileDto("filePath", "RTE_EQ", ProcessFileStatus.VALIDATED, "fileName", OffsetDateTime.now()));
-        processFiles.add(new ProcessFileDto("filePath", "RTE_TP", ProcessFileStatus.VALIDATED, "fileName", OffsetDateTime.now()));
-        processFiles.add(new ProcessFileDto("filePath", "RTE_SSH", ProcessFileStatus.VALIDATED, "fileName", OffsetDateTime.now()));
-        processFiles.add(new ProcessFileDto("filePath", "CRAC", ProcessFileStatus.VALIDATED, "fileName", OffsetDateTime.now()));
-        processFiles.add(new ProcessFileDto("filePath", "GLSK", ProcessFileStatus.VALIDATED, "fileName", OffsetDateTime.now()));
-        processFiles.add(new ProcessFileDto("filePath", "BOUNDARY_EQ", ProcessFileStatus.VALIDATED, "fileName", OffsetDateTime.now()));
-        processFiles.add(new ProcessFileDto("filePath", "BOUNDARY_TP", ProcessFileStatus.VALIDATED, "fileName", OffsetDateTime.now()));
-        return new TaskDto(id, timestamp, status, processFiles, null, null, null, Collections.emptyList(), Collections.emptyList());
+        processFiles.add(new ProcessFileDto("filePath", "CORESO_SV", ProcessFileStatus.VALIDATED, "fileName", "documentId", OffsetDateTime.now()));
+        processFiles.add(new ProcessFileDto("filePath", "REE_EQ", ProcessFileStatus.VALIDATED, "fileName", "documentId", OffsetDateTime.now()));
+        processFiles.add(new ProcessFileDto("filePath", "REE_TP", ProcessFileStatus.VALIDATED, "fileName", "documentId", OffsetDateTime.now()));
+        processFiles.add(new ProcessFileDto("filePath", "REE_SSH", ProcessFileStatus.VALIDATED, "fileName", "documentId", OffsetDateTime.now()));
+        processFiles.add(new ProcessFileDto("filePath", "REN_EQ", ProcessFileStatus.VALIDATED, "fileName", "documentId", OffsetDateTime.now()));
+        processFiles.add(new ProcessFileDto("filePath", "REN_TP", ProcessFileStatus.VALIDATED, "fileName", "documentId", OffsetDateTime.now()));
+        processFiles.add(new ProcessFileDto("filePath", "REN_SSH", ProcessFileStatus.VALIDATED, "fileName", "documentId", OffsetDateTime.now()));
+        processFiles.add(new ProcessFileDto("filePath", "RTE_EQ", ProcessFileStatus.VALIDATED, "fileName", "documentId", OffsetDateTime.now()));
+        processFiles.add(new ProcessFileDto("filePath", "RTE_TP", ProcessFileStatus.VALIDATED, "fileName", "documentId", OffsetDateTime.now()));
+        processFiles.add(new ProcessFileDto("filePath", "RTE_SSH", ProcessFileStatus.VALIDATED, "fileName", "documentId", OffsetDateTime.now()));
+        processFiles.add(new ProcessFileDto("filePath", "CRAC", ProcessFileStatus.VALIDATED, "fileName", "documentId", OffsetDateTime.now()));
+        processFiles.add(new ProcessFileDto("filePath", "GLSK", ProcessFileStatus.VALIDATED, "fileName", "documentId", OffsetDateTime.now()));
+        processFiles.add(new ProcessFileDto("filePath", "BOUNDARY_EQ", ProcessFileStatus.VALIDATED, "fileName", "documentId", OffsetDateTime.now()));
+        processFiles.add(new ProcessFileDto("filePath", "BOUNDARY_TP", ProcessFileStatus.VALIDATED, "fileName", "documentId", OffsetDateTime.now()));
+        return new TaskDto(id, timestamp, status, processFiles, null, null, null, List.of(new ProcessRunDto(UUID.randomUUID(), OffsetDateTime.now(), Collections.emptyList())), Collections.emptyList());
     }
 
 }
