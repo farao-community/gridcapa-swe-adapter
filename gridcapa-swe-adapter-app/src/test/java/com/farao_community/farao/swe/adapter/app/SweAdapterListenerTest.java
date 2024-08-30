@@ -39,7 +39,7 @@ class SweAdapterListenerTest {
     @Test
     void testGetManualSweRequest() {
         when(minioAdapter.generatePreSignedUrlFromFullMinioPath("filePath", 1)).thenReturn("filePathUrl");
-        TaskDto taskDto = createTaskDtoWithStatus(true);
+        TaskDto taskDto = createTaskDto(true);
         SweRequest sweRequest = sweAdapterListener.getManualSweRequest(taskDto);
         assertEquals(taskDto.getId().toString(), sweRequest.getId());
         assertEquals(taskDto.getTimestamp(), sweRequest.getTargetProcessDateTime());
@@ -48,11 +48,11 @@ class SweAdapterListenerTest {
     @Test
     void testGetManualSweRequestNoRunHistory() {
         when(minioAdapter.generatePreSignedUrlFromFullMinioPath("filePath", 1)).thenReturn("filePathUrl");
-        TaskDto taskDto = createTaskDtoWithStatus(false);
+        TaskDto taskDto = createTaskDto(false);
         assertThrows(SweAdapterException.class, () -> sweAdapterListener.getManualSweRequest(taskDto));
     }
 
-    TaskDto createTaskDtoWithStatus(boolean withRunHistory) {
+    TaskDto createTaskDto(boolean withRunHistory) {
         UUID id = UUID.randomUUID();
         OffsetDateTime timestamp = OffsetDateTime.parse("2022-09-20T10:30Z");
         List<ProcessFileDto> processFiles = new ArrayList<>();
