@@ -21,6 +21,7 @@ import java.util.List;
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.when;
 
 /**
@@ -38,13 +39,20 @@ class SweAdapterListenerTest {
     @Test
     void testGetManualSweRequest() {
         when(minioAdapter.generatePreSignedUrlFromFullMinioPath("filePath", 1)).thenReturn("filePathUrl");
-        TaskDto taskDto = createTaskDtoWithStatus(TaskStatus.READY);
+        TaskDto taskDto = createTaskDtoWithStatus(true);
         SweRequest sweRequest = sweAdapterListener.getManualSweRequest(taskDto);
         assertEquals(taskDto.getId().toString(), sweRequest.getId());
         assertEquals(taskDto.getTimestamp(), sweRequest.getTargetProcessDateTime());
     }
 
-    TaskDto createTaskDtoWithStatus(TaskStatus status) {
+    @Test
+    void testGetManualSweRequestNoRunHistory() {
+        when(minioAdapter.generatePreSignedUrlFromFullMinioPath("filePath", 1)).thenReturn("filePathUrl");
+        TaskDto taskDto = createTaskDtoWithStatus(false);
+        assertThrows(SweAdapterException.class, () -> sweAdapterListener.getManualSweRequest(taskDto));
+    }
+
+    TaskDto createTaskDtoWithStatus(boolean withRunHistory) {
         UUID id = UUID.randomUUID();
         OffsetDateTime timestamp = OffsetDateTime.parse("2022-09-20T10:30Z");
         List<ProcessFileDto> processFiles = new ArrayList<>();
@@ -62,9 +70,12 @@ class SweAdapterListenerTest {
         processFiles.add(new ProcessFileDto("filePath", "GLSK", ProcessFileStatus.VALIDATED, "fileName", "documentId", OffsetDateTime.now()));
         processFiles.add(new ProcessFileDto("filePath", "BOUNDARY_EQ", ProcessFileStatus.VALIDATED, "fileName", "documentId", OffsetDateTime.now()));
         processFiles.add(new ProcessFileDto("filePath", "BOUNDARY_TP", ProcessFileStatus.VALIDATED, "fileName", "documentId", OffsetDateTime.now()));
-        ArrayList<ProcessRunDto> runHistory = new ArrayList<>();
-        runHistory.add(new ProcessRunDto(UUID.randomUUID(), OffsetDateTime.now(), Collections.emptyList()));
-        return new TaskDto(id, timestamp, status, processFiles, null, null, null, runHistory, Collections.emptyList());
+        ArrayList<ProcessRunDto> runHistory = null;
+        if (withRunHistory) {
+            runHistory = new ArrayList<>();
+            runHistory.add(new ProcessRunDto(UUID.randomUUID(), OffsetDateTime.now(), Collections.emptyList()));
+        }
+        return new TaskDto(id, timestamp, TaskStatus.READY, processFiles, null, null, null, runHistory, Collections.emptyList());
     }
 
 }
