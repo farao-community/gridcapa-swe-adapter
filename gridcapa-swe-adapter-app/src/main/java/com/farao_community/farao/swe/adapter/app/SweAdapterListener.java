@@ -113,9 +113,7 @@ public class SweAdapterListener {
             LOGGER.warn("Failed to handle manual run request on timestamp {} because it has no run history", taskDto.getTimestamp());
             throw new SweAdapterException("Failed to handle manual run request on timestamp because it has no run history");
         }
-        if (runHistory.size() > 1) {
-            runHistory.sort((o1, o2) -> o2.getExecutionDate().compareTo(o1.getExecutionDate()));
-        }
+        runHistory.sort((o1, o2) -> o2.getExecutionDate().compareTo(o1.getExecutionDate()));
         return runHistory.get(0).getId().toString();
     }
 }
