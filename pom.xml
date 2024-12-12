@@ -43,7 +43,7 @@
     </developers>
 
     <properties>
-        <gridcapa.starter.minio.adapter.version>1.3.0</gridcapa.starter.minio.adapter.version>
+        <gridcapa.starter.minio.adapter.version>1.4.0</gridcapa.starter.minio.adapter.version>
         <task-manager.version>1.33.0</task-manager.version>
         <swe.version>1.28.0</swe.version>
         <sonar.organization>farao-community</sonar.organization>
