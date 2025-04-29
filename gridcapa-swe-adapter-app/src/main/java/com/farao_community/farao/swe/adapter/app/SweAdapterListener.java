@@ -34,7 +34,7 @@ public class SweAdapterListener {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(SweAdapterListener.class);
     private final SweClient sweClient;
-    private final MinioAdapter minioAadpter;
+    private final MinioAdapter minioAdapter;
 
     @Value("${swe-adapter.process-type}")
     private String processType;
@@ -42,7 +42,7 @@ public class SweAdapterListener {
     public SweAdapterListener(final SweClient sweClient,
                               final MinioAdapter minioAdapter) {
         this.sweClient = sweClient;
-        this.minioAadpter = minioAdapter;
+        this.minioAdapter = minioAdapter;
     }
 
     @Bean
@@ -111,7 +111,7 @@ public class SweAdapterListener {
                 .filter(p -> p.getFileType().equals(type))
                 .findFirst()
                 .orElseThrow(() -> new SweAdapterException("No file found for type " + type));
-        return new SweFileResource(input.getFilename(), minioAadpter.generatePreSignedUrlFromFullMinioPath(input.getFilePath(), 1));
+        return new SweFileResource(input.getFilename(), minioAdapter.generatePreSignedUrlFromFullMinioPath(input.getFilePath(), 1));
     }
 
     private String getCurrentRunId(final TaskDto taskDto) {
