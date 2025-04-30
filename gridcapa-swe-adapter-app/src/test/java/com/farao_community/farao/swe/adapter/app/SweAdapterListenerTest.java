@@ -6,10 +6,17 @@
  */
 package com.farao_community.farao.swe.adapter.app;
 
-import com.farao_community.farao.gridcapa.task_manager.api.*;
+import com.farao_community.farao.gridcapa.task_manager.api.ProcessFileDto;
+import com.farao_community.farao.gridcapa.task_manager.api.ProcessFileStatus;
+import com.farao_community.farao.gridcapa.task_manager.api.ProcessRunDto;
+import com.farao_community.farao.gridcapa.task_manager.api.TaskDto;
+import com.farao_community.farao.gridcapa.task_manager.api.TaskStatus;
 import com.farao_community.farao.minio_adapter.starter.MinioAdapter;
 import com.farao_community.farao.swe.runner.api.resource.SweRequest;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -19,6 +26,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
+import java.util.function.Consumer;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -36,10 +44,31 @@ class SweAdapterListenerTest {
     @MockBean
     private MinioAdapter minioAdapter;
 
+    @Autowired
+    private Consumer<TaskDto> consumeTask;
+
+    @ParameterizedTest
+    @CsvSource({"READY, true",
+                "SUCCESS, true",
+                "INTERRUPTED, true",
+                "ERROR, true",
+                "CREATED, false"})
+    void testHandleManualRequestThroughConsumerBean(final TaskStatus status,
+                                                    final boolean shouldBeHandled) {
+        final TaskDto taskDto = createTaskDto(true, status);
+        when(minioAdapter.generatePreSignedUrlFromFullMinioPath("filePath", 1)).thenReturn("filePathUrl");
+        consumeTask.accept(taskDto);
+        if (shouldBeHandled) {
+            Mockito.verify(minioAdapter, Mockito.times(14)).generatePreSignedUrlFromFullMinioPath("filePath", 1);
+        } else {
+            Mockito.verifyNoInteractions(minioAdapter);
+        }
+    }
+
     @Test
     void testGetManualSweRequest() {
         when(minioAdapter.generatePreSignedUrlFromFullMinioPath("filePath", 1)).thenReturn("filePathUrl");
-        TaskDto taskDto = createTaskDto(true);
+        TaskDto taskDto = createTaskDto(true, TaskStatus.READY);
         SweRequest sweRequest = sweAdapterListener.getManualSweRequest(taskDto);
         assertEquals(taskDto.getId().toString(), sweRequest.getId());
         assertEquals(taskDto.getTimestamp(), sweRequest.getTargetProcessDateTime());
@@ -48,11 +77,12 @@ class SweAdapterListenerTest {
     @Test
     void testGetManualSweRequestNoRunHistory() {
         when(minioAdapter.generatePreSignedUrlFromFullMinioPath("filePath", 1)).thenReturn("filePathUrl");
-        TaskDto taskDto = createTaskDto(false);
+        TaskDto taskDto = createTaskDto(false, TaskStatus.READY);
         assertThrows(SweAdapterException.class, () -> sweAdapterListener.getManualSweRequest(taskDto));
     }
 
-    TaskDto createTaskDto(boolean withRunHistory) {
+    TaskDto createTaskDto(boolean withRunHistory,
+                          TaskStatus status) {
         UUID id = UUID.randomUUID();
         OffsetDateTime timestamp = OffsetDateTime.parse("2022-09-20T10:30Z");
         List<ProcessFileDto> processFiles = new ArrayList<>();
@@ -75,7 +105,7 @@ class SweAdapterListenerTest {
             runHistory = new ArrayList<>();
             runHistory.add(new ProcessRunDto(UUID.randomUUID(), OffsetDateTime.now(), Collections.emptyList()));
         }
-        return new TaskDto(id, timestamp, TaskStatus.READY, processFiles, null, null, null, runHistory, Collections.emptyList());
+        return new TaskDto(id, timestamp, status, processFiles, null, null, null, runHistory, Collections.emptyList());
     }
 
 }
