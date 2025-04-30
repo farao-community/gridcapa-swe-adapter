@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2024, RTE (http://www.rte-france.com)
+ * Copyright (c) 2025, RTE (http://www.rte-france.com)
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
@@ -34,14 +34,15 @@ public class SweAdapterListener {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(SweAdapterListener.class);
     private final SweClient sweClient;
-    private final MinioAdapter minioAadpter;
+    private final MinioAdapter minioAdapter;
 
     @Value("${swe-adapter.process-type}")
     private String processType;
 
-    public SweAdapterListener(SweClient sweClient, MinioAdapter minioAadpter) {
+    public SweAdapterListener(final SweClient sweClient,
+                              final MinioAdapter minioAdapter) {
         this.sweClient = sweClient;
-        this.minioAadpter = minioAadpter;
+        this.minioAdapter = minioAdapter;
     }
 
     @Bean
@@ -49,42 +50,47 @@ public class SweAdapterListener {
         return this::handleManualTask;
     }
 
-    private void handleManualTask(TaskDto taskDto) {
+    private void handleManualTask(final TaskDto taskDto) {
         try {
-            if (taskDto.getStatus() == TaskStatus.READY
-                    || taskDto.getStatus() == TaskStatus.SUCCESS
-                    || taskDto.getStatus() == TaskStatus.INTERRUPTED
-                    || taskDto.getStatus() == TaskStatus.ERROR) {
+            if (isTaskReadyForManualProcessing(taskDto)) {
                 LOGGER.info("Handling manual run request on TS {} ", taskDto.getTimestamp());
-                SweRequest request = getManualSweRequest(taskDto);
+                final SweRequest request = getManualSweRequest(taskDto);
                 CompletableFuture.runAsync(() -> sweClient.run(request, SweRequest.class));
             } else {
                 LOGGER.warn("Failed to handle manual run request on timestamp {} because it is not ready yet", taskDto.getTimestamp());
             }
-        } catch (Exception e) {
+        } catch (final Exception e) {
             throw new SweAdapterException(String.format("Error during handling manual run request %s on TS ", taskDto.getTimestamp()), e);
         }
     }
 
-    SweRequest getManualSweRequest(TaskDto taskDto) {
+    private static boolean isTaskReadyForManualProcessing(final TaskDto taskDto) {
+        return taskDto.getStatus() == TaskStatus.READY
+               || taskDto.getStatus() == TaskStatus.SUCCESS
+               || taskDto.getStatus() == TaskStatus.INTERRUPTED
+               || taskDto.getStatus() == TaskStatus.ERROR;
+    }
+
+    SweRequest getManualSweRequest(final TaskDto taskDto) {
+        final List<ProcessFileDto> inputs = taskDto.getInputs();
         return new SweRequest(taskDto.getId().toString(),
                 getCurrentRunId(taskDto),
                 getProcessTypeFromConfiguration(),
                 taskDto.getTimestamp(),
-                getFileRessourceFromInputs(taskDto.getInputs(), "CORESO_SV"),
-                getFileRessourceFromInputs(taskDto.getInputs(), "REE_EQ"),
-                getFileRessourceFromInputs(taskDto.getInputs(), "REE_SSH"),
-                getFileRessourceFromInputs(taskDto.getInputs(), "REE_TP"),
-                getFileRessourceFromInputs(taskDto.getInputs(), "REN_EQ"),
-                getFileRessourceFromInputs(taskDto.getInputs(), "REN_SSH"),
-                getFileRessourceFromInputs(taskDto.getInputs(), "REN_TP"),
-                getFileRessourceFromInputs(taskDto.getInputs(), "RTE_EQ"),
-                getFileRessourceFromInputs(taskDto.getInputs(), "RTE_SSH"),
-                getFileRessourceFromInputs(taskDto.getInputs(), "RTE_TP"),
-                getFileRessourceFromInputs(taskDto.getInputs(), "CRAC"),
-                getFileRessourceFromInputs(taskDto.getInputs(), "BOUNDARY_EQ"),
-                getFileRessourceFromInputs(taskDto.getInputs(), "BOUNDARY_TP"),
-                getFileRessourceFromInputs(taskDto.getInputs(), "GLSK"),
+                getFileRessourceFromInputs(inputs, "CORESO_SV"),
+                getFileRessourceFromInputs(inputs, "REE_EQ"),
+                getFileRessourceFromInputs(inputs, "REE_SSH"),
+                getFileRessourceFromInputs(inputs, "REE_TP"),
+                getFileRessourceFromInputs(inputs, "REN_EQ"),
+                getFileRessourceFromInputs(inputs, "REN_SSH"),
+                getFileRessourceFromInputs(inputs, "REN_TP"),
+                getFileRessourceFromInputs(inputs, "RTE_EQ"),
+                getFileRessourceFromInputs(inputs, "RTE_SSH"),
+                getFileRessourceFromInputs(inputs, "RTE_TP"),
+                getFileRessourceFromInputs(inputs, "CRAC"),
+                getFileRessourceFromInputs(inputs, "BOUNDARY_EQ"),
+                getFileRessourceFromInputs(inputs, "BOUNDARY_TP"),
+                getFileRessourceFromInputs(inputs, "GLSK"),
                 taskDto.getParameters());
     }
 
@@ -98,22 +104,23 @@ public class SweAdapterListener {
         };
     }
 
-    private SweFileResource getFileRessourceFromInputs(List<ProcessFileDto> listInputs, String type) {
-        ProcessFileDto input = listInputs.stream()
+    private SweFileResource getFileRessourceFromInputs(final List<ProcessFileDto> listInputs,
+                                                       final String type) {
+        final ProcessFileDto input = listInputs.stream()
                 .filter(p -> p.getFilePath() != null)
                 .filter(p -> p.getFileType().equals(type))
                 .findFirst()
                 .orElseThrow(() -> new SweAdapterException("No file found for type " + type));
-        return new SweFileResource(input.getFilename(), minioAadpter.generatePreSignedUrlFromFullMinioPath(input.getFilePath(), 1));
+        return new SweFileResource(input.getFilename(), minioAdapter.generatePreSignedUrlFromFullMinioPath(input.getFilePath(), 1));
     }
 
-    private String getCurrentRunId(TaskDto taskDto) {
-        List<ProcessRunDto> runHistory = taskDto.getRunHistory();
+    private String getCurrentRunId(final TaskDto taskDto) {
+        final List<ProcessRunDto> runHistory = taskDto.getRunHistory();
         if (runHistory == null || runHistory.isEmpty()) {
             LOGGER.warn("Failed to handle manual run request on timestamp {} because it has no run history", taskDto.getTimestamp());
             throw new SweAdapterException("Failed to handle manual run request on timestamp because it has no run history");
         }
         runHistory.sort((o1, o2) -> o2.getExecutionDate().compareTo(o1.getExecutionDate()));
-        return runHistory.get(0).getId().toString();
+        return runHistory.getFirst().getId().toString();
     }
 }
