@@ -111,7 +111,7 @@ public class SweAdapterListener {
                 .filter(p -> p.getFileType().equals(type))
                 .findFirst()
                 .orElseThrow(() -> new SweAdapterException("No file found for type " + type));
-        return new SweFileResource(input.getFilename(), minioAdapter.generatePreSignedUrlFromFullMinioPath(input.getFilePath(), 1));
+        return new SweFileResource(input.getFilename(), minioAdapter.generatePreSignedUrlFromFullMinioPath(input.getFilePath(), 30));
     }
 
     private String getCurrentRunId(final TaskDto taskDto) {
