@@ -56,10 +56,10 @@ class SweAdapterListenerTest {
     void testHandleManualRequestThroughConsumerBean(final TaskStatus status,
                                                     final boolean shouldBeHandled) {
         final TaskDto taskDto = createTaskDto(true, status);
-        when(minioAdapter.generatePreSignedUrlFromFullMinioPath("filePath", 30)).thenReturn("filePathUrl");
+        when(minioAdapter.generatePreSignedUrlFromFullMinioPath("filePath", 7)).thenReturn("filePathUrl");
         consumeTask.accept(taskDto);
         if (shouldBeHandled) {
-            Mockito.verify(minioAdapter, Mockito.times(14)).generatePreSignedUrlFromFullMinioPath("filePath", 30);
+            Mockito.verify(minioAdapter, Mockito.times(14)).generatePreSignedUrlFromFullMinioPath("filePath", 7);
         } else {
             Mockito.verifyNoInteractions(minioAdapter);
         }
@@ -67,7 +67,7 @@ class SweAdapterListenerTest {
 
     @Test
     void testGetManualSweRequest() {
-        when(minioAdapter.generatePreSignedUrlFromFullMinioPath("filePath", 30)).thenReturn("filePathUrl");
+        when(minioAdapter.generatePreSignedUrlFromFullMinioPath("filePath", 7)).thenReturn("filePathUrl");
         TaskDto taskDto = createTaskDto(true, TaskStatus.READY);
         SweRequest sweRequest = sweAdapterListener.getManualSweRequest(taskDto);
         assertEquals(taskDto.getId().toString(), sweRequest.getId());
@@ -76,7 +76,7 @@ class SweAdapterListenerTest {
 
     @Test
     void testGetManualSweRequestNoRunHistory() {
-        when(minioAdapter.generatePreSignedUrlFromFullMinioPath("filePath", 30)).thenReturn("filePathUrl");
+        when(minioAdapter.generatePreSignedUrlFromFullMinioPath("filePath", 7)).thenReturn("filePathUrl");
         TaskDto taskDto = createTaskDto(false, TaskStatus.READY);
         assertThrows(SweAdapterException.class, () -> sweAdapterListener.getManualSweRequest(taskDto));
     }
