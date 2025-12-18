@@ -44,7 +44,7 @@
 
     <properties>
         <argLine /> <!-- required for java agent declaration, do not remove -->
-        <gridcapa.starter.minio.adapter.version>1.6.0</gridcapa.starter.minio.adapter.version>
+        <gridcapa.starter.minio.adapter.version>1.8.0</gridcapa.starter.minio.adapter.version>
         <task-manager.version>1.36.0</task-manager.version>
         <swe.version>1.38.0</swe.version>
         <sonar.organization>farao-community</sonar.organization>
